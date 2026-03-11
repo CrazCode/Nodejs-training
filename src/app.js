@@ -1,5 +1,6 @@
 const express = require('express')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Customer = require('./models/customers.js')
 
 const app = express()
 mongoose.set('strictQuery', false);
@@ -15,24 +16,31 @@ const CONNECTION = process.env.CONNECTION
 const customers = [
   {
     "name": "Mustafa",
-    "inc.": "facebook"
+    "inc": "facebook"
   },
   {
     "name": "Manga",
-    "inc.": "instagram"
+    "inc": "instagram"
   },
   {
     "name": "Tahsin",
-    "inc.": "yuotube"
+    "inc": "youtube"
   },
 ] 
+
+const customer = new Customer({
+  name: 'Hannash',
+  inc: 'tiktok'
+})
+
+customer.save();
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Homepage!')
 })
 
 app.get('/api/customers', (req, res) => {
-  res.send({"customers": customers})
+  res.send({"customers": customers, customer})
 })
 
 app.post('/api/customers', (req, res) => {
